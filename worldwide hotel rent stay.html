@@ -1,0 +1,363 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Worldwide Vacation Rental Stay Booking Management</title>
+
+<style>
+
+body{
+font-family:Segoe UI;
+margin:0;
+background:#f4f6f9;
+}
+
+header{
+background:#2c3e50;
+color:white;
+padding:15px;
+text-align:center;
+font-size:22px;
+}
+
+.container{
+width:90%;
+margin:auto;
+margin-top:20px;
+}
+
+.login-box{
+background:white;
+padding:20px;
+width:300px;
+margin:auto;
+box-shadow:0 0 10px #ccc;
+border-radius:10px;
+}
+
+input, select{
+width:100%;
+padding:10px;
+margin:8px 0;
+}
+
+button{
+padding:10px;
+width:100%;
+background:#3498db;
+border:none;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#2980b9;
+}
+
+.search-bar{
+margin:20px 0;
+text-align:center;
+}
+
+#searchInput{
+width:50%;
+padding:10px;
+}
+
+.places{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:20px;
+}
+
+.place-card{
+background:white;
+padding:15px;
+border-radius:10px;
+box-shadow:0 0 10px #ddd;
+}
+
+.place-card img{
+width:100%;
+height:200px;
+object-fit:cover;
+border-radius:10px;
+}
+
+.map{
+width:100%;
+height:200px;
+margin-top:10px;
+}
+
+.book-btn{
+background:#27ae60;
+margin-top:10px;
+}
+
+.popup{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+}
+
+.popup-content{
+background:white;
+width:350px;
+padding:20px;
+margin:100px auto;
+border-radius:10px;
+}
+
+.cancel-btn{
+background:red;
+margin-top:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+Worldwide Vacation Rental Stay Booking Management
+</header>
+
+<div class="container">
+
+<!-- LOGIN PAGE -->
+
+<div class="login-box" id="loginPage">
+
+<h2>User Login</h2>
+
+<input type="text" placeholder="Username" id="username">
+<input type="password" placeholder="Password" id="password">
+
+<button onclick="login()">Login</button>
+
+<br><br>
+
+<h3>Admin Login</h3>
+
+<button onclick="adminLogin()">Admin Login</button>
+
+</div>
+
+
+<!-- MAIN WEBSITE -->
+
+<div id="mainSite" style="display:none;">
+
+<div class="search-bar">
+<input type="text" id="searchInput" onkeyup="searchPlaces()" placeholder="Search Places...">
+</div>
+
+
+<div class="places">
+
+<!-- PLACE 1 -->
+
+<div class="place-card">
+
+<img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e">
+
+<h3>Bali Beach Villa</h3>
+
+<p>Price: $120 per night</p>
+
+<iframe class="map"
+src="https://maps.google.com/maps?q=bali&t=&z=13&ie=UTF8&iwloc=&output=embed">
+</iframe>
+
+<button class="book-btn" onclick="bookPlace('Bali Beach Villa')">Book Now</button>
+
+</div>
+
+
+<!-- PLACE 2 -->
+
+<div class="place-card">
+
+<img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470">
+
+<h3>Swiss Mountain Resort</h3>
+
+<p>Price: $200 per night</p>
+
+<iframe class="map"
+src="https://maps.google.com/maps?q=switzerland&t=&z=13&ie=UTF8&iwloc=&output=embed">
+</iframe>
+
+<button class="book-btn" onclick="bookPlace('Swiss Mountain Resort')">Book Now</button>
+
+</div>
+
+
+<!-- PLACE 3 -->
+
+<div class="place-card">
+
+<img src="https://images.unsplash.com/photo-1493558103817-58b2924bce98">
+
+<h3>Dubai Luxury Hotel</h3>
+
+<p>Price: $180 per night</p>
+
+<iframe class="map"
+src="https://maps.google.com/maps?q=dubai&t=&z=13&ie=UTF8&iwloc=&output=embed">
+</iframe>
+
+<button class="book-btn" onclick="bookPlace('Dubai Luxury Hotel')">Book Now</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- BOOKING POPUP -->
+
+<div id="bookingPopup" class="popup">
+
+<div class="popup-content">
+
+<h3>Booking Details</h3>
+
+<label>Check In</label>
+<input type="date" id="checkin">
+
+<label>Check Out</label>
+<input type="date" id="checkout">
+
+<label>Guests</label>
+<input type="number" id="guests" min="1" value="1">
+
+<label>Room Type</label>
+<select id="roomType">
+<option>Single Room</option>
+<option>Double Room</option>
+<option>Deluxe Room</option>
+<option>Suite</option>
+</select>
+
+<button onclick="proceedPayment()">Proceed Payment</button>
+
+<button class="cancel-btn" onclick="closeBooking()">Cancel</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+let selectedPlace="";
+
+function login(){
+
+let user=document.getElementById("username").value
+let pass=document.getElementById("password").value
+
+if(user!="" && pass!=""){
+
+document.getElementById("loginPage").style.display="none"
+document.getElementById("mainSite").style.display="block"
+
+}
+else{
+alert("Please enter login details")
+}
+
+}
+
+function adminLogin(){
+
+let admin=prompt("Enter Admin Password")
+
+if(admin=="admin123"){
+alert("Admin Login Successful")
+}
+else{
+alert("Wrong Password")
+}
+
+}
+
+function searchPlaces(){
+
+let input=document.getElementById("searchInput").value.toLowerCase()
+let cards=document.getElementsByClassName("place-card")
+
+for(let i=0;i<cards.length;i++){
+
+let title=cards[i].getElementsByTagName("h3")[0].innerText.toLowerCase()
+
+if(title.includes(input)){
+cards[i].style.display="block"
+}
+else{
+cards[i].style.display="none"
+}
+
+}
+
+}
+
+function bookPlace(place){
+
+selectedPlace=place
+document.getElementById("bookingPopup").style.display="block"
+
+}
+
+function closeBooking(){
+document.getElementById("bookingPopup").style.display="none"
+}
+
+function proceedPayment(){
+
+let checkin=document.getElementById("checkin").value
+let checkout=document.getElementById("checkout").value
+let guests=document.getElementById("guests").value
+let room=document.getElementById("roomType").value
+
+if(checkin=="" || checkout==""){
+alert("Please select Check-in and Check-out dates")
+return
+}
+
+let payment=confirm("Proceed to payment for "+selectedPlace+" ?")
+
+if(payment){
+
+let card=prompt("Enter Card Number")
+
+if(card){
+
+alert("Payment Successful!\n\nBooking Confirmed\n\nPlace: "+selectedPlace+"\nGuests: "+guests+"\nRoom Type: "+room+"\nCheck-in: "+checkin+"\nCheck-out: "+checkout)
+
+document.getElementById("bookingPopup").style.display="none"
+
+}
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
+```
