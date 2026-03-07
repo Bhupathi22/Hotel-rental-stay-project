@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Worldwide Vacation Rental Stay Booking Management</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+Worldwide Vacation Rental Stay Booking Management
+</header>
+
+<div class="container">
+
+<!-- LOGIN PAGE -->
+
+<div class="login-box" id="loginPage">
+
+<h2>User Login</h2>
+
+<input type="text" placeholder="Username" id="username">
+<input type="password" placeholder="Password" id="password">
+
+<button onclick="login()">Login</button>
+
+<br><br>
+
+<h3>Admin Login</h3>
+
+<button onclick="adminLogin()">Admin Login</button>
+
+</div>
+
+
+<!-- MAIN WEBSITE -->
+
+<div id="mainSite" style="display:none;">
+
+<div class="search-bar">
+<input type="text" id="searchInput" onkeyup="searchPlaces()" placeholder="Search Places...">
+</div>
+
+
+<div class="places">
+
+<!-- PLACE 1 -->
+
+<div class="place-card">
+
+<img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e">
+
+<h3>Bali Beach Villa</h3>
+
+<p>Price: $120 per night</p>
+
+<iframe class="map"
+src="https://maps.google.com/maps?q=bali&t=&z=13&ie=UTF8&iwloc=&output=embed">
+</iframe>
+
+<button class="book-btn" onclick="bookPlace('Bali Beach Villa')">Book Now</button>
+
+</div>
+
+
+<!-- PLACE 2 -->
+
+<div class="place-card">
+
+<img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470">
+
+<h3>Swiss Mountain Resort</h3>
+
+<p>Price: $200 per night</p>
+
+<iframe class="map"
+src="https://maps.google.com/maps?q=switzerland&t=&z=13&ie=UTF8&iwloc=&output=embed">
+</iframe>
+
+<button class="book-btn" onclick="bookPlace('Swiss Mountain Resort')">Book Now</button>
+
+</div>
+
+
+<!-- PLACE 3 -->
+
+<div class="place-card">
+
+<img src="https://images.unsplash.com/photo-1493558103817-58b2924bce98">
+
+<h3>Dubai Luxury Hotel</h3>
+
+<p>Price: $180 per night</p>
+
+<iframe class="map"
+src="https://maps.google.com/maps?q=dubai&t=&z=13&ie=UTF8&iwloc=&output=embed">
+</iframe>
+
+<button class="book-btn" onclick="bookPlace('Dubai Luxury Hotel')">Book Now</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- BOOKING POPUP -->
+
+<div id="bookingPopup" class="popup">
+
+<div class="popup-content">
+
+<h3>Booking Details</h3>
+
+<label>Check In</label>
+<input type="date" id="checkin">
+
+<label>Check Out</label>
+<input type="date" id="checkout">
+
+<label>Guests</label>
+<input type="number" id="guests" min="1" value="1">
+
+<label>Room Type</label>
+<select id="roomType">
+<option>Single Room</option>
+<option>Double Room</option>
+<option>Deluxe Room</option>
+<option>Suite</option>
+</select>
+
+<button onclick="proceedPayment()">Proceed Payment</button>
+
+<button class="cancel-btn" onclick="closeBooking()">Cancel</button>
+
+</div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
